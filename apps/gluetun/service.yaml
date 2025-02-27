@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gluetun
+  namespace: jellyfin
+spec:
+  selector:
+    app: gluetun
+  ports:
+  - protocol: TCP
+    port: 9091
+    targetPort: 9091
+    name: trans-web
+  - protocol: TCP
+    port: 9696
+    targetPort: 9696
+    name: prowlarr-web
+  - protocol: UDP
+    port: 51413
+    targetPort: 51413
+    name: torrent-udp
+  - protocol: TCP
+    port: 51413
+    targetPort: 51413
+    name: torrent-tcp
+  - protocol: TCP
+    port: 7878
+    targetPort: 7878
+    name: radarr-web
+  - protocol: TCP
+    port: 8989
+    targetPort: 8989
+    name: sonarr-web
+  - protocol: TCP
+    port: 8787
+    targetPort: 8787
+    name: readarr-web
+  - protocol: TCP
+    port: 8686
+    targetPort: 8686
+    name: lidarr-web
+  - protocol: TCP
+    port: 8191
+    targetPort: 8191
+    name: flaresolverr

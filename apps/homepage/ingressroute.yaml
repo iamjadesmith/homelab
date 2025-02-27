@@ -1,0 +1,26 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homepage
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`home.joejad.com`)
+      kind: Rule
+      services:
+        - name: homepage
+          port: 3000
+          sticky:
+            cookie:
+              httpOnly: true
+              secure: true
+              sameSite: none
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: local-joejad-tls

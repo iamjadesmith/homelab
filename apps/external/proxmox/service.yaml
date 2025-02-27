@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxmox
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: 10.47.59.5
+  ports:
+    - name: https
+      port: 8006
+      targetPort: 8006
