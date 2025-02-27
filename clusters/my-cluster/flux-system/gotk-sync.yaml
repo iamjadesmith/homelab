@@ -11,7 +11,7 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-  url: ssh://git@gitea.joejad.com:2222/joejad/flux.git
+  url: ssh://git@github.com/iamjadesmith/homelab
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
