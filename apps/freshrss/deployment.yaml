@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: freshrss
-          image: freshrss/freshrss
+          image: "freshrss/freshrss:1.26.0"
           envFrom:
             - secretRef:
                 name: freshrss-secret
