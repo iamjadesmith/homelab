@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant
+          image: homeassistant/home-assistant:2025.3.0
           resources:
             requests:
               memory: "128Mi"
@@ -37,7 +37,7 @@ spec:
             - mountPath: /config
               name: home-assistant-content
         - name: matter-server
-          image: ghcr.io/home-assistant-libs/python-matter-server:stable
+          image: ghcr.io/home-assistant-libs/python-matter-server:7.0.1
           volumeMounts:
             - mountPath: /data
               name: matter-content
