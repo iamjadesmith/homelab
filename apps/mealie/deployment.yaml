@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: mealie
-          image: "ghcr.io/mealie-recipes/mealie"
+          image: "ghcr.io/mealie-recipes/mealie:v2.7.1"
           resources:
             limits:
               memory: "1000Mi"
