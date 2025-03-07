@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: unifi
-          image: lscr.io/linuxserver/unifi-network-application:latest
+          image: lscr.io/linuxserver/unifi-network-application:9.0.114-ls82
           envFrom:
             - secretRef:
                 name: unifi-secret
@@ -37,7 +37,7 @@ spec:
             - mountPath: /config
               name: unifi-config
         - name: unifi-db
-          image: "docker.io/mongo:4.4"
+          image: docker.io/mongo:4.4
           volumeMounts:
             - mountPath: /data/db
               name: unifi-db-data
