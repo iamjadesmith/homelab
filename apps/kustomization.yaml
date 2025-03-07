@@ -9,7 +9,6 @@ resources:
   - gitea
   - gluetun
   - grafana
-  # - home-assistant
   - homepage
   - jellyfin
   - longhorn
