@@ -37,7 +37,7 @@ spec:
             - mountPath: /config
               name: unifi-config
         - name: unifi-db
-          image: docker.io/mongo:4.4
+          image: docker.io/mongo:8.0
           volumeMounts:
             - mountPath: /data/db
               name: unifi-db-data
