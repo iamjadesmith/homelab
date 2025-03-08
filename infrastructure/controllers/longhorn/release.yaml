@@ -15,4 +15,4 @@ spec:
   interval: 1m0s
   values:
     defaultSettings:
-      backupTarget: "nfs://nixnas.joejad.lan:/home/joejad"
+      backupTarget: "nfs://joejadnix.joejad.lan:/home/joejad/backups"
