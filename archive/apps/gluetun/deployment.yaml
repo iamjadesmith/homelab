@@ -109,7 +109,7 @@ spec:
             - mountPath: /tv
               name: sonarr-shows
         - name: readarr
-          image: lscr.io/linuxserver/readarr:0.4.11-develop
+          image: lscr.io/linuxserver/readarr:0.4.12-develop
           env:
             - name: TZ
               value: "US/Chicago"
