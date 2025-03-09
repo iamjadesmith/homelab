@@ -17,7 +17,6 @@ resources:
   - nextcloud
   - pdf
   - postgres
-  - scrypted
   - traefik
   - unifi
   - vault
