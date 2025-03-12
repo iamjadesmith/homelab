@@ -26,7 +26,7 @@ spec:
           - 303
       containers:
         - name: scrypted
-          image: ghcr.io/koush/scrypted:v0.137.0-noble-full
+          image: ghcr.io/koush/scrypted:v0.138.15-noble-full
           ports:
             - containerPort: 11080
           securityContext:
