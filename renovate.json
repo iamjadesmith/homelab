@@ -8,6 +8,6 @@
   },
   "kubernetes": {
     "fileMatch": ["\\.yaml$"]
-  }
+  },
   "ignorePaths": ["**/archive/**"]
 }
