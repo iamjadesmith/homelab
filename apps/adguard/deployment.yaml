@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: ad2
-          image: "adguard/adguardhome:v0.107.57"
+          image: "adguard/adguardhome:v0.107.58"
           ports:
           - containerPort: 53
             name: dns
