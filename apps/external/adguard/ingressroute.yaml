@@ -14,7 +14,7 @@ spec:
       kind: Rule
       services:
         - name: adguard
-          port: 3000
+          port: 80
       middlewares:
         - name: default-headers
   tls:
