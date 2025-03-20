@@ -18,4 +18,5 @@ resources:
   - scrypted
   - sonarr
   - syncjoe
+  - unifi
   - workout
