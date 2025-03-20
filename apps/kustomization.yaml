@@ -13,5 +13,4 @@ resources:
   - pdf
   - postgres
   - traefik
-  - unifi
   - vault
