@@ -8,6 +8,6 @@ spec:
   type: ExternalName
   externalName: 10.47.59.30
   ports:
-    - name: http
+    - name: https
       port: 8443
       targetPort: 8443
