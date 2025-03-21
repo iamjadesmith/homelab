@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: pdf
-          image: "stirlingtools/stirling-pdf:0.44.2"
+          image: "stirlingtools/stirling-pdf:0.44.3"
           ports:
             - containerPort: 8080
           env:
