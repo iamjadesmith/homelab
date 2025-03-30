@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: minecraft
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: minecraft
+    spec:
+      nodeName: agent-2
+      containers:
+        - name: minecraft
+          image: "itzg/minecraft-server:latest"
+          ports:
+            - containerPort: 25565
+          env:
+            - name: EULA
+              value: "TRUE"
+            - name: OPS
+              value: "JoeJad, Abbyb727"
+            - name: LEVEL
+              value: "The Bestest World"
+            - name: MOTD
+              value: "The World for the Bears"
+            - name: DIFFICULTY
+              value: "normal"
+            - name: ICON
+              value: "https://img.freepik.com/premium-vector/cartoon-vector-illustration-cute-loving-bear-hugging_255358-3482.jpg"
+            - name: TZ
+              value: "US/Central"
+          volumeMounts:
+            - mountPath: /data
+              name: minecraft-content
+      volumes:
+        - name: minecraft-content
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/minecraft/server
+      hostNetwork: true

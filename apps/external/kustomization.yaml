@@ -1,0 +1,22 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - adguard
+  - backup
+  - cloud
+  - home-assistant
+  - jellyfin
+  - lidarr
+  - ollama
+  - opnsense
+  - prowlarr
+  - proxmox
+  - qbt
+  - radarr
+  - readarr
+  - scrypted
+  - sonarr
+  - syncjoe
+  - unifi
+  - workout

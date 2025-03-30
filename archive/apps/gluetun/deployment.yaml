@@ -1,0 +1,183 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gluetun
+  namespace: jellyfin
+spec:
+  selector:
+    matchLabels:
+      app: gluetun
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: gluetun
+    spec:
+      containers:
+        - name: gluetun
+          image: qmcgaw/gluetun:v3.40.0
+          imagePullPolicy: Always
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          ports:
+            - containerPort: 51413
+              name: torrent-udp
+              protocol: UDP
+            - containerPort: 51413
+              name: torrent-tcp
+              protocol: TCP
+            - containerPort: 9091
+              name: trans-web
+            - containerPort: 9696
+              name: prowlarr-web
+            - containerPort: 7878
+              name: radarr-web
+            - containerPort: 8989
+              name: sonarr-web
+            - containerPort: 8787
+              name: readarr-web
+            - containerPort: 8686
+              name: lidarr-web
+            - containerPort: 8191
+              name: flaresolverr
+          envFrom:
+            - secretRef:
+                name: gluetun-secret
+        - name: transmission
+          image: lscr.io/linuxserver/transmission:4.0.6
+          volumeMounts:
+            - mountPath: /config
+              name: transmission-content
+            - mountPath: /downloads
+              name: transmission-media
+          env:
+            - name: TZ
+              value: "US/Chicago"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+        - name: prowlarr
+          image: lscr.io/linuxserver/prowlarr:1.31.2
+          volumeMounts:
+            - mountPath: /config
+              name: prowlarr-content
+          env:
+            - name: TZ
+              value: "US/Chicago"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+        - name: radarr
+          image: lscr.io/linuxserver/radarr:5.19.3
+          env:
+            - name: TZ
+              value: "US/Chicago"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - mountPath: /config
+              name: radarr-content
+            - mountPath: /downloads
+              name: transmission-media
+            - mountPath: /movies
+              name: radarr-movies
+        - name: sonarr
+          image: lscr.io/linuxserver/sonarr:4.0.13
+          env:
+            - name: TZ
+              value: "US/Chicago"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - mountPath: /config
+              name: sonarr-content
+            - mountPath: /downloads
+              name: transmission-media
+            - mountPath: /tv
+              name: sonarr-shows
+        - name: readarr
+          image: lscr.io/linuxserver/readarr:0.4.11-develop
+          env:
+            - name: TZ
+              value: "US/Chicago"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - mountPath: /config
+              name: readarr-content
+            - mountPath: /downloads
+              name: transmission-media
+            - mountPath: /books
+              name: readarr-books
+        - name: lidarr
+          image: lscr.io/linuxserver/lidarr:2.9.6
+          env:
+            - name: TZ
+              value: "US/Chicago"
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+          volumeMounts:
+            - mountPath: /config
+              name: lidarr-content
+            - mountPath: /downloads
+              name: transmission-media
+            - mountPath: /music
+              name: lidarr-music
+        - name: flaresolverr
+          image: ghcr.io/flaresolverr/flaresolverr:v3.3.21
+      volumes:
+        - name: transmission-content
+          persistentVolumeClaim:
+            claimName: transmission-claim
+        - name: prowlarr-content
+          persistentVolumeClaim:
+            claimName: prowlarr-claim
+        - name: radarr-content
+          persistentVolumeClaim:
+            claimName: radarr-claim
+        - name: sonarr-content
+          persistentVolumeClaim:
+            claimName: sonarr-claim
+        - name: readarr-content
+          persistentVolumeClaim:
+            claimName: readarr-claim
+        - name: lidarr-content
+          persistentVolumeClaim:
+            claimName: lidarr-claim
+        - name: transmission-media
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/media/downloads
+        - name: radarr-movies
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/media/movies
+        - name: sonarr-shows
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/media/shows
+        - name: readarr-books
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/media/books
+        - name: lidarr-music
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/media/music

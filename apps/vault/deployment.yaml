@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vaultwarden
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: vaultwarden
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: vaultwarden
+    spec:
+      containers:
+        - name: vaultwarden
+          image: vaultwarden/server:1.33.2
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          envFrom:
+            - secretRef:
+                name: vaultwarden-secret
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /data
+              name: vaultwarden-content
+      volumes:
+        - name: vaultwarden-content
+          persistentVolumeClaim:
+            claimName: vaultwarden-claim

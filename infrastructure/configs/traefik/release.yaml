@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      version: 34.4.1
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+  interval: 1m0s
+  values:
+    globalArguments:
+      - "--global.sendanonymoususage=false"
+      - "--global.checknewversion=false"
+
+    additionalArguments:
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--log.level=INFO"
+      - "--providers.kubernetesingress.allowExternalNameServices=true"
+
+    deployment:
+      enabled: true
+      replicas: 3
+      annotations: {}
+      podAnnotations: {}
+      additionalContainers: []
+      initContainers: []
+
+    ports:
+      web:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            priority: 10
+      websecure:
+        tls:
+          enabled: true
+      gitea-ssh:
+        port: 2222
+        expose:
+          default: true
+      postgres:
+        port: 5432
+        expose:
+          default: true
+
+    ingressRoute:
+      dashboard:
+        enabled: false
+
+    providers:
+      kubernetesCRD:
+        enabled: true
+        ingressClass: traefik-external
+        allowExternalNameServices: true
+      kubernetesIngress:
+        enabled: true
+        allowExternalNameServices: true
+        publishedService:
+          enabled: false
+
+    rbac:
+      enabled: true
+
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations: {}
+      labels: {}
+      spec:
+        loadBalancerIP: 10.47.59.40
+      loadBalancerSourceRanges: []
+      externalIPs: []

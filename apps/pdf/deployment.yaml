@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pdf
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: pdf
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: pdf
+    spec:
+      containers:
+        - name: pdf
+          image: "stirlingtools/stirling-pdf:0.45.0"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DOCKER_ENABLE_SECURITY
+              value: "false"
+            - name: LANGS
+              value: "en_US"
+          volumeMounts:
+            - mountPath: /usr/share/tessdata
+              name: pdf-content
+            - mountPath: /configs
+              name: pdf-content
+            - mountPath: /customFiles/
+              name: pdf-content
+            - mountPath: /logs/
+              name: pdf-content
+            - mountPath: /pipeline/
+              name: pdf-content
+      volumes:
+        - name: pdf-content
+          persistentVolumeClaim:
+            claimName: pdf-claim

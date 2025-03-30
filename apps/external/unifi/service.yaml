@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: 10.47.59.30
+  ports:
+    - name: https
+      port: 8443
+      targetPort: 8443

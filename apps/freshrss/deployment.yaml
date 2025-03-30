@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freshrss
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: freshrss
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: freshrss
+    spec:
+      containers:
+        - name: freshrss
+          image: "freshrss/freshrss:1.26.1"
+          envFrom:
+            - secretRef:
+                name: freshrss-secret
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/FreshRSS/data
+              name: freshrss-data
+            - mountPath: /var/www/FreshRSS/extensions
+              name: freshrss-extensions
+      volumes:
+        - name: freshrss-data
+          persistentVolumeClaim:
+            claimName: freshrss-claim
+        - name: freshrss-extensions
+          persistentVolumeClaim:
+            claimName: freshrss-extension-claim

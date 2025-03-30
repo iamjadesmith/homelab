@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: change
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: change
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: change
+    spec:
+      containers:
+        - name: change
+          image: "ghcr.io/dgtlmoon/changedetection.io:0.49"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: PLAYWRIGHT_DRIVER_URL
+              value: "ws://localhost:3000"
+            - name: BASE_URL
+              value: "https://change.joejad.com"
+          volumeMounts:
+            - mountPath: /datastore
+              name: change-content
+        - name: playwright-chrome
+          image: "browserless/chrome:1.61.1-chrome-stable"
+          env:
+            - name: SCREEN_WIDTH
+              value: "1920"
+            - name: SCREEN_HEIGHT
+              value: "1024"
+            - name: SCREEN_DEPTH
+              value: "16"
+            - name: ENABLE_DEBUGGER
+              value: "false"
+            - name: PREBOOT_CHROME
+              value: "true"
+            - name: CONNECTION_TIMEOUT
+              value: "300000"
+            - name: MAX_CONCURRENT_SESSIONS
+              value: "10"
+            - name: CHROME_REFRESH_TIME
+              value: "600000"
+            - name: DEFAULT_BLOCK_ADS
+              value: "true"
+            - name: DEFAULT_STEALTH
+              value: "true"
+            - name: DEFAULT_IGNORE_HTTPS_ERRORS
+              value: "true"
+      volumes:
+        - name: change-content
+          persistentVolumeClaim:
+            claimName: change-claim

@@ -1,0 +1,21 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: change
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`change.joejad.com`)
+      kind: Rule
+      services:
+        - name: change
+          port: 5000
+      middlewares:
+        - name: default-headers
+  tls:
+    secretName: local-joejad-tls

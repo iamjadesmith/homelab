@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr
+  namespace: default
+spec:
+  type: ExternalName
+  externalName: 10.47.59.25
+  ports:
+    - name: http
+      port: 7878
+      targetPort: 7878

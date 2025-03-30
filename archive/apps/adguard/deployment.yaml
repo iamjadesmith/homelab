@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ad2
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: ad2
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ad2
+    spec:
+      containers:
+        - name: ad2
+          image: "adguard/adguardhome:v0.107.57"
+          ports:
+          - containerPort: 53
+            name: dns
+            protocol: UDP
+          - containerPort: 3000
+            name: http
+          volumeMounts:
+            - mountPath: /opt/adguardhome/work
+              name: work-content
+            - mountPath: /opt/adguardhome/conf
+              name: conf-content
+        - name: adguard-sync
+          image: "ghcr.io/bakito/adguardhome-sync:v0.7.2"
+          envFrom:
+            - secretRef:
+                name: adguard-sync-secret
+      volumes:
+        - name: work-content
+          persistentVolumeClaim:
+            claimName: adguard-work
+        - name: conf-content
+          persistentVolumeClaim:
+            claimName: adguard-conf
+      hostNetwork: true

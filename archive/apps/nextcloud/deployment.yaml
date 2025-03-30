@@ -1,0 +1,38 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextcloud
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nextcloud
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nextcloud
+    spec:
+      containers:
+        - name: nextcloud
+          image: "nextcloud:31.0.0"
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: nextcloud-secret
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: nextcloud-content
+        - name: redis
+          image: "redis:alpine3.21"
+      volumes:
+        - name: nextcloud-content
+          nfs:
+            server: nixnas.joejad.lan
+            path: /home/joejad/nextcloud
