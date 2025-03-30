@@ -6,6 +6,6 @@ resources:
   - gitea
   - longhorn
   - metallb
-  # - postgres
+  - postgres
   - prometheus
   - traefik
