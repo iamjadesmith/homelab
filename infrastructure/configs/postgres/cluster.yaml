@@ -5,7 +5,7 @@ metadata:
   name: postgres
   namespace: default
 spec:
-  instances: 3
+  instances: 1
   superuserSecret:
     name: pg-superuser
   enableSuperuserAccess: true
