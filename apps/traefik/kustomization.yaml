@@ -5,3 +5,4 @@ resources:
   - default-headers.yaml
   - ingressroute.yaml
   - middleware.yaml
+  - secret.yaml

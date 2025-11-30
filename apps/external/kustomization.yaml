@@ -8,7 +8,7 @@ resources:
   - home-assistant
   - jellyfin
   - lidarr
-  - ollama
+  # - ollama
   - opnsense
   - prowlarr
   - proxmox
@@ -17,6 +17,5 @@ resources:
   - readarr
   - scrypted
   - sonarr
-  - syncjoe
   - unifi
-  - workout
+  # - workout

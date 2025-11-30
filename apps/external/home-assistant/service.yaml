@@ -6,7 +6,7 @@ metadata:
   namespace: default
 spec:
   type: ExternalName
-  externalName: 10.47.59.10
+  externalName: 10.47.59.2
   ports:
     - name: http
       port: 8123

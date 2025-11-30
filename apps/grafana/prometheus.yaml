@@ -1,0 +1,62 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus-community
+  namespace: default
+spec:
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+  interval: 1m0s
+  values:
+    enabled: true
+    kubeControllerManager:
+      enabled: false
+    nodeExporter:
+      enabled: false
+    defaultRules:
+      create: true
+      rules:
+        alertmanager: false
+        etcd: false
+        configReloaders: false
+        general: false
+        k8s: true
+        kubeApiserver: false
+        kubeApiserverAvailability: false
+        kubeApiserverSlos: false
+        kubelet: true
+        kubeProxy: false
+        kubePrometheusGeneral: false
+        kubePrometheusNodeRecording: false
+        kubernetesApps: false
+        kubernetesResources: false
+        kubernetesStorage: false
+        kubernetesSystem: false
+        kubeScheduler: false
+        kubeStateMetrics: false
+        network: false
+        node: true
+        nodeExporterAlerting: false
+        nodeExporterRecording: true
+        prometheus: false
+        prometheusOperator: false
+
+    prometheus:
+      prometheusSpec:
+        podMonitorSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+    grafana:
+      enabled: true
+      defaultDashboardsEnabled: false
+      sidecar:
+          dashboards:
+            enabled: true
+    alertmanager:
+      enabled: true

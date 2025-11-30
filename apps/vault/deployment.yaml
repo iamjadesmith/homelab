@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: vaultwarden
-          image: vaultwarden/server:1.33.2
+          image: vaultwarden/server:latest
           resources:
             requests:
               memory: "128Mi"

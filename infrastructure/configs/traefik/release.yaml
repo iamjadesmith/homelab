@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: 34.4.1
+      version: 37.4.0
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -41,14 +41,6 @@ spec:
       websecure:
         tls:
           enabled: true
-      gitea-ssh:
-        port: 2222
-        expose:
-          default: true
-      postgres:
-        port: 5432
-        expose:
-          default: true
 
     ingressRoute:
       dashboard:
@@ -74,6 +66,6 @@ spec:
       annotations: {}
       labels: {}
       spec:
-        loadBalancerIP: 10.47.59.40
+        loadBalancerIP: 10.47.59.53
       loadBalancerSourceRanges: []
       externalIPs: []
