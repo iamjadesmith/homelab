@@ -15,4 +15,4 @@ spec:
   interval: 1m0s
   values:
     defaultSettings:
-      backupTarget: "nfs://joejadnix.joejad.lan:/home/joejad/backups"
+      backupTarget: "nfs://joejadserver.joejad.lan:/home/joejad/backups/k3s"
