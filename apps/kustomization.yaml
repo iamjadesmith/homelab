@@ -8,4 +8,4 @@ resources:
   # - homepage
   - longhorn
   - traefik
-  - vault
+  # - vault
