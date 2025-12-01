@@ -6,6 +6,12 @@ Install fluxcd
 curl -s https://fluxcd.io/install.sh | sudo bash
 ```
 
+Create the `flux-system` namespace
+
+```bash
+kubectl create namespace flux-system
+```
+
 Add age public key
 
 ```bash

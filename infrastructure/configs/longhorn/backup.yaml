@@ -1,5 +1,5 @@
 ---
-apiVersion: longhorn.io/v1beta1
+apiVersion: longhorn.io/v1beta2
 kind: RecurringJob
 metadata:
   name: snapshot-1
@@ -12,7 +12,7 @@ spec:
   retain: 3
   concurrency: 1
 ---
-apiVersion: longhorn.io/v1beta1
+apiVersion: longhorn.io/v1beta2
 kind: RecurringJob
 metadata:
   name: backup-1
