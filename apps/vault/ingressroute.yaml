@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`vault2.joejad.com`)
+    - match: Host(`vault.joejad.com`)
       kind: Rule
       services:
         - name: vaultwarden
