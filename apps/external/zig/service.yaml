@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: home-assistant
+  name: zig
   namespace: default
 spec:
   type: ExternalName
-  externalName: 10.47.59.10
+  externalName: 10.47.59.37
   ports:
     - name: http
-      port: 8123
-      targetPort: 8123
+      port: 8080
+      targetPort: 8080

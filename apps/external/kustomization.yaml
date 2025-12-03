@@ -5,11 +5,14 @@ resources:
   - adguard
   - backup
   - cloud
+  - git
+  - golf
   - home-assistant
   - jellyfin
   - lidarr
   # - ollama
   - opnsense
+  - paper
   - prowlarr
   - proxmox
   - qbt
@@ -18,4 +21,6 @@ resources:
   - scrypted
   - sonarr
   - unifi
-  # - workout
+  - uptime
+  - workout
+  - zig
