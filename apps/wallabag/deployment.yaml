@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wallabag
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: wallabag
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wallabag
+    spec:
+      containers:
+        - name: wallabag
+          image: wallabag/wallabag:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            - name: SYMFONY__ENV__DOMAIN_NAME
+              value: "https://wal.joejad.com"
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/wallabag/data
+              name: wallabag-content
+            - mountPath: /var/www/wallabag/web/assets/images
+              name: wallabag-content
+      volumes:
+        - name: wallabag-content
+          persistentVolumeClaim:
+            claimName: wallabag-claim
